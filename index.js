@@ -12,7 +12,9 @@ const app=express()
 app.use(express.json())
 
 app.use("/api",UserRouter)
+
 app.use("/api",RetaurentRouter)
+
 app.use("/api",OrderRouter)
 
 
