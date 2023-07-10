@@ -52,4 +52,24 @@ RetaurentRouter.patch("/restaurants/:id/menu",async(req,res)=>{
         return res.status(401).send({msg:error.message})
     }
 })
+
+RetaurentRouter.delete("/restaurants/:id/menu/:menuid",async(req,res)=>{
+    try {
+        const {id,menuid}=req.params
+        const restaurent= await RestaurentModel.findByIdAndUpdate({_id:id})
+        let menu=restaurent.menu
+        let filterdata=menu.filter((ele)=>{
+            if(ele._id==menuid){
+                return false
+            }else{
+                return true
+            }
+        })
+        restaurent.menu=filterdata
+        await restaurent.save()
+    return res.status(201).send({msg:"menu deleted"})
+    } catch (error) {
+        return res.status(401).send({msg:error.message})
+    }
+})
 module.exports=RetaurentRouter
